@@ -37,4 +37,4 @@ class User extends Model {
     }
 }
 
-module.exports = UserDTO;
+module.exports = User;

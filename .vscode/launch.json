@@ -15,7 +15,10 @@
             "name": "Attach to Process",
             "type": "node2",
             "request": "attach",
-            "port": 9229
+            "port": 9229,
+            "address": "localhost",
+            "localRoot": "${workspaceRoot}/",
+            "remoteRoot": "/usr/src/app"
         }
     ]
 }

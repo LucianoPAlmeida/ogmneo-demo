@@ -9,12 +9,15 @@ services:
             - neo4j
         env_file: variables.env
         ports:
-            - "7474:7474"
-            - "7687:7687"
+            - "3000:3000"
+            - "9229:9229"
     neo4j:
         container_name: neo4j
         image: neo4j:3.2.0        
         networks: 
             - demo
+        ports:
+            - "7474:7474"
+            - "7687:7687"
 networks: 
     demo:
