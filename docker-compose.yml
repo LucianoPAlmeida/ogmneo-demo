@@ -1,0 +1,20 @@
+version: '2'
+services: 
+    application: 
+        container_name: demo-api
+        build: .
+        networks: 
+            - demo
+        depends_on:
+            - neo4j
+        env_file: variables.env
+        ports:
+            - "7474:7474"
+            - "7687:7687"
+    neo4j:
+        container_name: neo4j
+        image: neo4j:3.2.0        
+        networks: 
+            - demo
+networks: 
+    demo:
