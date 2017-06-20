@@ -2,7 +2,17 @@
 const ogmneo = require('ogmneo');
 const OGMNeoNode = ogmneo.Node;
 const UserDTO = require('./DTO/user-dto');
+const PostDAO = require('./post-dao');
+
 class UserDAO {
+
+    constructor() {
+        this._postDAO = new PostDAO();
+    }
+
+    get postDAO() {
+        return this._postDAO;
+    }
 
     save(user) {
         return new Promise((resolve, reject) => {
@@ -45,7 +55,28 @@ class UserDAO {
             let query = ogmneo.Query.create('User');
             OGMNeoNode.find(query).then((nodes) => {
                 resolve(nodes.map(node => UserDTO.fromNode(node)));
-            }).catch((error)=> {
+            }).catch((error) => {
+                reject(error);
+            });
+        });
+    }
+
+    allPopulated() {
+        return new Promise((resolve, reject) => {
+            let query = ogmneo.Query.create('User');
+            OGMNeoNode.find(query).then((nodes) => {
+                let users = nodes.map(node => UserDTO.fromNode(node));
+                let postPromises = users.map(user => this.postDAO.postsForUser(user));
+                Promise.all(postPromises).then((results) => {
+                    console.log(results);
+                    users.forEach((user, idx) => {
+                        user.posts = results[idx];
+                    });
+                    resolve(users);
+                }).catch((error) => {
+                    reject(error);
+                });
+            }).catch((error) => {
                 reject(error);
             });
         });

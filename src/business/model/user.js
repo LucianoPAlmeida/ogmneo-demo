@@ -35,6 +35,14 @@ class User extends Model {
     set registeredAt(value) {
         this._registeredAt = value;
     }
+
+    set posts(value) {
+        this._posts = value;
+    }
+
+    get posts() {
+        return this._posts;
+    }
 }
 
 module.exports = User;

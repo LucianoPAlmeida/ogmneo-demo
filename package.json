@@ -21,7 +21,7 @@
     "lodash": "^4.16.6",
     "moment": "^2.15.2",
     "morgan": "~1.6.1",
-    "ogmneo": "^0.4.1",
+    "ogmneo": "^0.4.2",
     "rx": "4.1.0"
   },
   "devDependencies": {

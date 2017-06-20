@@ -28,6 +28,7 @@ class UserResource {
         this._setupDelete();
         this._setupAddPost();
         this._setupDeletePost();
+        this._setupGetPosts();
     }
 
     get router() {
@@ -98,8 +99,18 @@ class UserResource {
                         this._internalError(res);
                     });
                 } else {
-                    res.status(404).send({ message: 'Post not found'});
+                    res.status(404).send({ message: 'Post not found' });
                 }
+            });
+        });
+    }
+
+    _setupGetPosts() {
+        this.router.get('/', (req, res) => {
+            this.userDAO.allPopulated().then((users) => {
+                res.send(users.map(user => user.asObject()));
+            }).catch(() => {
+                this._internalError(res);
             });
         });
     }
