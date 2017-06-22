@@ -63,11 +63,20 @@ class UserResource {
             let user = new User({ objectId: parseInt(req.params.userId) });
             this.userDAO.hasPosts(user).then((hasPosts) => {
                 if (!hasPosts) {
-                    this.userDAO.delete(user).then((deleted) => {
-                        res.send(deleted.asObject());
+                    this.userDAO.userWithId(user.objectId).then((user) => {
+                        if (user) {
+                            this.userDAO.delete(user).then(() => {
+                                res.send(user.asObject());
+                            }).catch(() => {
+                                this._internalError(res);
+                            });
+                        } else {
+                            res.status(404).send({message: 'User not found'});
+                        }
                     }).catch(() => {
                         this._internalError(res);
                     });
+
                 } else {
                     res.status(400).send({ message: 'User can\'t be deleted because there\'s posts associated to him' });
                 }

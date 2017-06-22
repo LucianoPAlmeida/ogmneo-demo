@@ -1,0 +1,197 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: BMW MLaptimer
+  description: MLaptimer API spec.
+  termsOfService: 'http://swagger.io/terms/'
+basePath: /v1
+tags:
+- name: "user"
+  description: "Everything about Users"
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+
+paths:
+  /users:
+    post:
+      tags:
+        -
+          "user"
+      summary: Create a new user.
+      parameters:
+        -
+          name: User data.
+          in: body
+          description: User to be created.
+          required: true
+          schema:
+            $ref: "#/definitions/NewUser"
+      responses:
+        201:
+          description: "User created."
+          schema:
+            $ref: "#/definitions/User"
+    get:
+      tags:
+        -
+          "user"
+      summary: Get all users
+      responses:
+        201:
+          description: "All registered users"
+          schema:
+            $ref: '#/definitions/FullUsers'
+  /users/{user-id}:
+    put:
+      tags:
+        -
+          "user"
+      summary: "Edit an existing user"
+      parameters:
+        -
+          name: "user-id"
+          in: "path"
+          required: true
+          type: "string"
+          description: "User id"
+        -
+          name: User data.
+          in: body
+          description: User to be editted.
+          required: true
+          schema:
+            $ref: "#/definitions/NewUser"
+      responses:
+        201:
+          description: "Edited User data."
+          schema:
+            $ref: "#/definitions/User"
+    delete:
+      tags:
+        -
+          "user"
+      summary: "Deletes an user"
+      parameters:
+        -
+          name: "user-id"
+          in: "path"
+          required: true
+          type: "string"
+          description: "User id"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "User can't be deleted because has posts."
+    
+  /users/{user-id}/posts:
+    post:
+      tags:
+        -
+          "post"
+      summary: "Insert a new post for an user."
+      parameters:
+        -
+          name: "user-id"
+          in: "path"
+          required: true
+          type: "string"
+        -
+          name: "post"
+          in: "body"
+          required: false
+          schema:
+            $ref: "#/definitions/NewPost"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Post"
+  /users/{user-id}/posts/{post-id}:
+    delete:
+      tags:
+        -
+          "post"
+      summary: "Delete a post from uses"
+      parameters:
+        -
+          name: "user-id"
+          in: "path"
+          required: true
+          type: "string"
+        -
+          name: "post-id"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: '#/definitions/Post'
+definitions:
+  ObjectBase:
+    type: "object"
+    required:
+      - "objectId"
+    properties:
+      objectId:
+        type: "number"
+  NewUser:
+    type: "object"
+    required:
+      - "email"
+      - "name"
+    properties:
+      email:
+        type: "string"
+      name:
+        type: "string"
+  User:
+    type: "object"
+    allOf:
+      -
+        $ref: "#/definitions/NewUser"
+      -
+        properties:
+          objectId:
+            type: "number"
+          registeredAt:
+            type: "string"
+
+  NewPost:
+    type: "object"
+    required:
+      - "text"
+    properties:
+      text:
+        type: "string"
+  Post:
+    type: "object"
+    allOf:
+      -
+        $ref: "#/definitions/NewPost"
+        properties:
+          date:
+            type: "string"
+  Posts:
+    type: "array"
+    items:
+      $ref: "#/definitions/Post"
+  FullUsers:
+    type: "object"
+    allOf:
+      -
+        $ref: "#/definitions/User"
+      -
+        properties:
+          posts:
+            type: "array"
+            items: 
+              $ref: '#/definitions/Posts'

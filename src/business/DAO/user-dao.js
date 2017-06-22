@@ -61,6 +61,19 @@ class UserDAO {
         });
     }
 
+    userWithId(objectId) {
+        return new Promise((resolve, reject) => {
+            ogmneo.Node.nodeWithId(objectId).then((found)=> {
+                if(found) {
+                    resolve(UserDTO.fromNode(found));
+                }else {
+                    resolve(null);
+                }
+            }).catch((error)=> {
+                reject(error);
+            });
+        });
+    }
     allPopulated() {
         return new Promise((resolve, reject) => {
             let query = ogmneo.Query.create('User');
@@ -68,7 +81,6 @@ class UserDAO {
                 let users = nodes.map(node => UserDTO.fromNode(node));
                 let postPromises = users.map(user => this.postDAO.postsForUser(user));
                 Promise.all(postPromises).then((results) => {
-                    console.log(results);
                     users.forEach((user, idx) => {
                         user.posts = results[idx];
                     });

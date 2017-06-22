@@ -11,7 +11,7 @@ class UserDTO {
                 objectId: node.id,
                 name: node.name,
                 email: node.email,
-                registeredAt: new Date(node.registeredAt)
+                registeredAt: (node.registeredAt) ? new Date(node.registeredAt) : null
             });
         }
         return null;
