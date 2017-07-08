@@ -30,4 +30,5 @@ You can run this application
   ````
 ## Testing 
  After running the application, a swagger docs is available at http://localhost:3000 
+ 
  Also a graphql endpoint is available on http://localhost:3000/v1/users-query
