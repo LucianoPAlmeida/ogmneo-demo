@@ -1,8 +1,8 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: BMW MLaptimer
-  description: MLaptimer API spec.
+  title: OGMNeo demo.
+  description: Spec for demo.
   termsOfService: 'http://swagger.io/terms/'
 basePath: /v1
 tags:
