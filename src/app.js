@@ -12,7 +12,7 @@ const UserGraph = require('./resources/v1/graphql/users-graphql');
 //Connection
 const ogmneo = require('ogmneo');
 ogmneo.Connection.connect(process.env.NEO4J_USER, process.env.NEO4J_PASSWORD, process.env.NEO4J_HOST);
-
+ogmneo.Connection.logCypherEnabled = true;
 
 
 // uncomment after placing your favicon in /public

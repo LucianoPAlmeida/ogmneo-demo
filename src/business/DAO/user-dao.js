@@ -74,6 +74,7 @@ class UserDAO {
             });
         });
     }
+    
     allPopulated() {
         return new Promise((resolve, reject) => {
             let query = ogmneo.Query.create('User');
