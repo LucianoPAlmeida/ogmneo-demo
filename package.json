@@ -20,13 +20,11 @@
     "graphql": "^0.10.1",
     "lodash": "^4.17.14",
     "moment": "^2.15.2",
-    "morgan": "^1.9.1",
     "ogmneo": "^1.0.6",
     "rx": "4.1.0"
   },
   "devDependencies": {
     "eslint": "^6.0.1",
-    "mocha": "^6.1.4",
     "supervisor": "^0.11.0"
   }
 }
